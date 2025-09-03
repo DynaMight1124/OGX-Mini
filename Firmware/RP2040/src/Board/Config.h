@@ -60,13 +60,13 @@
     #define SLAVE_ADDR_PIN_2    14
 
 #elif defined(CONFIG_OGXM_BOARD_ESP32_BLUEPAD32_I2C)
-    #define OGXM_BOARD          ESP32_BLUEPAD32_I2C
-    #define I2C_SDA_PIN         18
-    #define I2C_SCL_PIN         19
-    #define UART0_TX_PIN        16
-    #define UART0_RX_PIN        17
-    #define MODE_SEL_PIN        21
-    #define ESP_PROG_PIN        20 // ESP32 IO0
+    #define OGXM_BOARD          ESP32_BLUEPAD32_I2C // DVD Dongle PCB Config
+    #define I2C_SDA_PIN         6 // Changed for DVD Dongle PCB
+    #define I2C_SCL_PIN         7 // Changed for DVD Dongle PCB
+    #define UART0_TX_PIN        12 // Changed for DVD Dongle PCB
+    #define UART0_RX_PIN        13 // Changed for DVD Dongle PCB
+    #define MODE_SEL_PIN        3 // Changed for DVD Dongle PCB
+    #define ESP_PROG_PIN        15 // ESP32 IO0 - Changed for DVD Dongle PCB
     #define ESP_RST_PIN         8  // ESP32 EN
 
     #if MAX_GAMEPADS > 1
