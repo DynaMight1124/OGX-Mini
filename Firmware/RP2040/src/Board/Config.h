@@ -27,7 +27,7 @@
 
 #elif defined(CONFIG_OGXM_BOARD_RP2040_ZERO)
     #define OGXM_BOARD          RP2040_ZERO
-    // #define RGB_PXL_PIN         16 
+    #define RGB_PXL_PIN         17 //to stop the LED 
     #define PIO_USB_DP_PIN      10 // DM = 11
     #define LED_INDICATOR_PIN   14
 
