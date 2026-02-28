@@ -173,7 +173,7 @@ static bool open(uint8_t rhport, uint8_t dev_addr, tusb_desc_interface_t const *
     if (desc_itf->bInterfaceSubClass == 0x5D && desc_itf->bInterfaceProtocol == 0x81)
     {
         itf_type = ItfType::XID;
-        dev_type = ;
+        dev_type = DevType::XBOX360W;
     }
     else if (desc_itf->bInterfaceSubClass == 0x5D && desc_itf->bInterfaceProtocol == 0x01)
     {
@@ -249,7 +249,7 @@ static bool set_config(uint8_t dev_addr, uint8_t itf_num)
 
     switch (interface->dev_type)
     {
-        case :
+        case DevType::XBOX360W:
             interface->connected = false;
             send_report(dev_addr, instance, Xbox360W::INQUIRE_PRESENT, sizeof(Xbox360W::INQUIRE_PRESENT));
             wait_for_tx_complete(dev_addr, interface->ep_out);
@@ -303,7 +303,7 @@ static bool xfer_cb(uint8_t dev_addr, uint8_t ep_addr, xfer_result_t result, uin
                     new_pad_data = true;
                 }
                 break;
-            case :
+            case DevType::XBOX360W:
                 if (in_buffer[0] & 0x08)
                 {
                     if (in_buffer[1] != 0x00 && !interface->connected)
