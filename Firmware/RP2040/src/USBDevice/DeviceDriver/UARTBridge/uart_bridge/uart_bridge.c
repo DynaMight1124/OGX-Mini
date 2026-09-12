@@ -14,7 +14,7 @@
 
 #if !defined(MIN)
 #define MIN(a, b) ((a > b) ? b : a)
-#endif 
+#endif
 
 #define BUFFER_SIZE 2560
 #define DEF_BIT_RATE 115200
@@ -97,8 +97,8 @@ void update_uart_cfg(uint8_t itf) {
 		if ((ud->usb_lc.stop_bits != ud->uart_lc.stop_bits) ||
 			(ud->usb_lc.parity != ud->uart_lc.parity) ||
 			(ud->usb_lc.data_bits != ud->uart_lc.data_bits)) {
-			uart_set_format(ui->inst, databits_usb2uart(ud->usb_lc.data_bits), 
-                            stopbits_usb2uart(ud->usb_lc.stop_bits), 
+			uart_set_format(ui->inst, databits_usb2uart(ud->usb_lc.data_bits),
+                            stopbits_usb2uart(ud->usb_lc.stop_bits),
                             parity_usb2uart(ud->usb_lc.parity));
 			ud->uart_lc = ud->usb_lc;
 		}
@@ -176,7 +176,7 @@ int uart_bridge_run(void) {
 			if (avail && mutex_try_enter(&ud->usb_mtx, NULL)) {
 				uint32_t n = MIN(avail, BUFFER_SIZE - ud->usb_pos);
 				uint32_t read = tud_cdc_n_read(i, &ud->usb_buffer[ud->usb_pos], n);
-                
+
                 // Check for completion flag in the data from PC
                 if (read >= COMPLETE_FLAG_LEN) {
                     for (uint32_t j = 0; j <= read - COMPLETE_FLAG_LEN; j++) {
@@ -191,5 +191,9 @@ int uart_bridge_run(void) {
 		}
         sleep_ms(1);
 	}
+
+	// Stop the polling loop before control returns to the normal shutdown/reboot path.
+	// The original bridge did this as soon as the completion marker was received.
+	multicore_reset_core1();
 	return 0;
 }
